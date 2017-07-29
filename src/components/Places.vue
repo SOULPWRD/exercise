@@ -28,7 +28,8 @@ export default {
   name: 'Places',
   props: {
     to: String,
-    flyFrom: String
+    flyFrom: String,
+    selectedPlaces: Object
   },
   data() {
     return {
@@ -103,6 +104,12 @@ export default {
       this.$emit(PLACE_SELECTED, Object.freeze({
         flyFrom: place
       }));
+    },
+    selectedPlaces(value) {
+
+      if (!value) {
+        this.selectedPlace = '';
+      }
     }
   }
 };
