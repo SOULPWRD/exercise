@@ -1,4 +1,7 @@
 import moment from 'moment';
+import Vue from 'vue';
+
+const bus = new Vue();
 
 /**
  * Parses fetched data from search places API.
@@ -187,5 +190,6 @@ export {
   createSearchQuery,
   runAsyncSequentially,
   runSequentially,
-  curry
+  curry,
+  bus
 };
