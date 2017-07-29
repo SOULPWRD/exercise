@@ -14,6 +14,7 @@
         <div class="searchPanel--searchResults">
           <Places
             v-bind:flyFrom="flyFrom"
+            v-bind:selectedPlaces="selectedPlaces.flyFrom"
             v-on:place-selected="updatePlaces"/>
         </div>
         <div class="form--input">
@@ -28,6 +29,7 @@
         <div class="searchPanel--searchResults">
           <Places
             v-bind:to="to"
+            v-bind:selectedPlaces="selectedPlaces.to"
             v-on:place-selected="updatePlaces"/>
         </div>
         <div class="form--date">
@@ -57,13 +59,14 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import { createSearchQuery } from './helpers.js';
+import { bus, createSearchQuery } from './helpers.js';
 
 // components
 import Places from './Places';
 import PlaceTab from './PlaceTab';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
+const RESULTS_FETCHED = 'results-fetched';
 
 
 export default {
@@ -126,7 +129,7 @@ export default {
       e.preventDefault();
 
       this.fetchSearchResults()
-        .then((data) => console.log(data));
+        .then((response) => bus.$emit(RESULTS_FETCHED, response.data));
     }
   },
   computed: {
