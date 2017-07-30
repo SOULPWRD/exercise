@@ -1,7 +1,7 @@
 <template>
   <div class="filterResults--wrapper" v-if="visible">
     <div class="filterResults--controls">
-      <button class="btn btn-hide" v-if="visible" v-on:click="close">close</button>
+      <button class="btn btn-hide" v-if="visible && preloader === false" v-on:click="close">close</button>
     </div>
     <div class="filterResults--preloader" v-show="visible && preloader === true">
       <span>Loading results...</span>
