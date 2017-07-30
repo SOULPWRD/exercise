@@ -1,10 +1,13 @@
 <template>
-  <div class="filterResults--wrapper" v-if="results">
+  <div class="filterResults--wrapper" v-if="visible">
     <div class="filterResults--controls">
       <button class="btn btn-hide" v-if="visible" v-on:click="setVisible(false)">hide</button>
       <button class="btn btn-show" v-else v-on:click="setVisible(true)">show</button>
     </div>
-    <div class="filterResults" v-show="visible">
+    <div class="filterResults--preloader" v-show="visible && preloader === true">
+      <span>Loading results...</span>
+    </div>
+    <div class="filterResults" v-show="visible && preloader === false">
       <div class="filterResults--title">
         <h3>AVAILABLE FLIGHTS</h3>
       </div>
@@ -40,21 +43,25 @@
 import { bus } from '../utils.js';
 
 const RESULTS_FETCHED = 'results-fetched';
+const FETCHING_RESULTS = 'fetching-results';
 
 export default {
   name: 'FilterResults',
   data() {
     return {
       visible: false,
-      results: undefined
+      results: undefined,
+      preloader: false
     };
   },
   methods: {
+    //updates results when new data comes
     updateResults(response) {
 
-      this.visible = true;
+      this.preloader = false;
       this.results = response.data;
     },
+    // listener
     setVisible(value, e) {
 
       if (e) {
@@ -62,10 +69,17 @@ export default {
       }
 
       this.visible = value;
+    },
+    // listener
+    showPreloader() {
+
+      this.visible = true;
+      this.preloader = true;
     }
   },
   created() {
     bus.$on(RESULTS_FETCHED, this.updateResults);
+    bus.$on(FETCHING_RESULTS, this.showPreloader);
   }
 }
 </script>

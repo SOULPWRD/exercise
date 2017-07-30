@@ -68,6 +68,7 @@ import PlaceTab from './PlaceTab';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 const RESULTS_FETCHED = 'results-fetched';
+const FETCHING_RESULTS = 'fetching-results';
 
 export default {
   name: 'SearchPanel',
@@ -123,6 +124,8 @@ export default {
         returnTo: this.returnTo,
         selectedPlaces: this.formatedSelectedPlaces
       };
+
+      bus.$emit(FETCHING_RESULTS);
 
       fetchFilterData(queryParams)
         .then((respose) => bus.$emit(RESULTS_FETCHED, respose.data));
