@@ -59,7 +59,8 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import { bus, createSearchQuery } from './helpers.js';
+import { bus } from '../utils.js';
+import { createFilterQuery } from '../managers/filterManager.js';
 
 // components
 import Places from './Places';
@@ -119,7 +120,7 @@ export default {
         selectedPlaces: this.formatedSelectedPlaces
       };
 
-      const query = createSearchQuery(queryParams);
+      const query = createFilterQuery(queryParams);
       const URI = encodeURI(`https://api.skypicker.com/flights?v=2&locale=en&${query}`);
 
       return axios.get(URI);
