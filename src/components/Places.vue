@@ -20,7 +20,7 @@
 
 <script>
 import axios from 'axios';
-import { parseDataPlaces } from './helpers.js';
+import { parseDataPlaces } from '../managers/placesManager';
 
 const PLACE_SELECTED = 'place-selected';
 
