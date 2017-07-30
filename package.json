@@ -6,11 +6,16 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "start": "node src/lib/server.js",
+    "build": "node build/build.js",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "blipp": "^2.3.0",
+    "hapi": "^16.5.0",
+    "hoek": "^4.2.0",
+    "inert": "^4.2.1",
     "moment": "^2.18.1",
     "momentum": "^1.0.1",
     "vue": "^2.3.3"
