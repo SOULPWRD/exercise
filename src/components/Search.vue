@@ -46,7 +46,7 @@
         </div>
         <div class="form--date">
           <label for="searchPanel-returnTo">RETURN TO</label>
-          <input id="searchPanel-returnTo" type="date" v-bind:min="returnTo" v-model="returnTo">
+          <input id="searchPanel-returnTo" type="date" v-bind:min="minReturnTo" v-model="returnTo">
         </div>
         <div class="form--submit">
           <input type="submit" value="Find flights">
@@ -156,5 +156,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .searchPanel--wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 </style>
