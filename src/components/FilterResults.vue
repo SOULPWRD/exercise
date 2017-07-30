@@ -70,3 +70,27 @@ export default {
 }
 </script>
 
+<style scoped>
+  .filterResults--wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 14%;
+  }
+
+  .filterResults--list {
+    position: absolute;
+    max-height: 95%;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .filterResults--item {
+    margin: 5px 0 5px 0;
+    padding: 5px 0 7px 0;
+    border-bottom: 1px solid black;
+  }
+
+</style>
+
