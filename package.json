@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "start": "node src/lib/server.js",
     "build": "node build/build.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm install && npm run build"
   },
   "dependencies": {
     "axios": "^0.16.2",
