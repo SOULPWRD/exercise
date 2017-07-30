@@ -1,7 +1,7 @@
 <template>
   <div class="searchPanel--wrapper">
     <div class="searchPanel--form">
-      <form v-on:submit.prevent="searchAvailableFligths">
+      <form v-on:submit.prevent="fetchSearchResults">
         <div class="form--input">
           <label for="searchPanel-from">FROM</label>
           <input id="searchPanel-from" type="text" v-model="flyFrom">
@@ -60,7 +60,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import { bus } from '../utils.js';
-import { createFilterQuery } from '../managers/filterManager.js';
+import fetchFilterData from '../managers/filterManager.js';
 
 // components
 import Places from './Places';
@@ -120,17 +120,8 @@ export default {
         selectedPlaces: this.formatedSelectedPlaces
       };
 
-      const query = createFilterQuery(queryParams);
-      const URI = encodeURI(`https://api.skypicker.com/flights?v=2&locale=en&${query}`);
-
-      return axios.get(URI);
-    },
-    searchAvailableFligths(e) {
-
-      e.preventDefault();
-
-      this.fetchSearchResults()
-        .then((response) => bus.$emit(RESULTS_FETCHED, response.data));
+      fetchFilterData(queryParams)
+        .then((respose) => bus.$emit(RESULTS_FETCHED, respose.data));
     }
   },
   computed: {
