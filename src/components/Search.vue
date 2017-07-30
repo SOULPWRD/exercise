@@ -89,8 +89,6 @@ export default {
     // new place from Place component is selected
     updatePlaces(spec, remove = false) {
 
-      console.log(spec);
-
       // resolves to a value from 'to' or 'flyFrom' data properties
       const key = Object.keys(spec)[0];
 
