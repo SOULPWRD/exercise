@@ -85,7 +85,7 @@ function createFilterQuery(spec) {
  *
  * @param {!string} uri URI
  */
-function encodeQueryURI(uri) {
+function encodeURI(uri) {
 
 
   return encodeURI(`${FILTER_URL}${uri}`);
@@ -111,7 +111,7 @@ function sendFilterRequest(uri) {
 function fetchFilterData(spec) {
 
   const queryString = createFilterQuery(spec);
-  return runSequentially(queryString)(encodeQueryURI, sendFilterRequest);
+  return runSequentially(queryString)(encodeURI, sendFilterRequest);
 }
 
 export default fetchFilterData;
