@@ -1,4 +1,4 @@
-# kiwi-exercise
+# exercise
 
 > exercise
 
