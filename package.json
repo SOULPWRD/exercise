@@ -8,7 +8,8 @@
     "dev": "node build/dev-server.js",
     "start": "node src/lib/server.js",
     "build": "node build/build.js",
-    "heroku-prebuild": "NPM_CONFIG_PRODUCTION=false npm install",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;",
     "postinstall": "npm run build"
   },
   "dependencies": {
