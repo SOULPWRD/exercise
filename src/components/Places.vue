@@ -1,7 +1,10 @@
 <template>
   <div class="places--wrapper">
+    <div class="preloader preloader--small" v-show="preloader === true">
+      <span>Loading...</span>
+    </div>
     <div class="places" v-show="places && places.length > 0">
-      <ul>
+      <ul v-show="preloader === false">
         <li v-for="place in places" v-bind:key="place.id" class="place--wrapper">
           <label>
             <input type="radio" v-bind:value="place.id" v-model="selectedPlace">
@@ -35,7 +38,8 @@ export default {
     return {
       places: undefined,
       selectedPlace: '',
-      axiosSource: undefined
+      axiosSource: undefined,
+      preloader: false
     }
   },
   methods: {
@@ -45,6 +49,7 @@ export default {
       const { data } = response;
 
       this.places = parseDataPlaces(data);
+      this.preloader = false;
     },
     // fetches available places data
     fetchPlaces(value) {
@@ -66,7 +71,7 @@ export default {
       // else
       // create a new axios token
       this.axiosSource = axios.CancelToken.source();
-
+      this.preloader = true;
       // and start requesting the server
       axios.get(`https://api.skypicker.com/places?term=${value}&v=2&locale=en`, {
         cancelToken: this.axiosSource.token
