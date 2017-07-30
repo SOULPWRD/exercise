@@ -1,5 +1,8 @@
 import moment from 'moment';
 import { flattenObject, runSequentially} from '../utils';
+import axios from 'axios';
+
+const FILTER_URL = 'https://api.skypicker.com/flights?v=2&locale=en&';
 
 /**
  * Formats dates object into specific format
@@ -65,21 +68,50 @@ function createFilterQuery(spec) {
 
   const { dateFrom, dateTo, returnFrom, returnTo, selectedPlaces } = spec;
 
-  const runDates = runSequentially({
+  const datesQuery = runSequentially({
     dateFrom,
     dateTo,
     returnFrom,
     returnTo
-  });
+  })(formatDates, flattenObject, parametrize, querify);
 
-  const runPlaces = runSequentially(selectedPlaces);
-
-  const datesQuery = runDates(formatDates, flattenObject, parametrize, querify);
-  const placesQuery = runPlaces(parametrize, querify);
+  const placesQuery = runSequentially(selectedPlaces)(parametrize, querify);
 
   return `${placesQuery}&${datesQuery}`;
 }
 
-export {
-  createFilterQuery
-};
+/**
+ * Encodes URI string.
+ *
+ * @param {!string} uri URI
+ */
+function encodeQueryURI(uri) {
+
+
+  return encodeURI(`${FILTER_URL}${uri}`);
+}
+
+/**
+ * Sends XHR
+ *
+ * @param {!string} uri URI
+ * @returns {Promise.<Object>} Data promise
+ */
+function sendFilterRequest(uri) {
+
+  return axios.get(uri);
+}
+
+/**
+ * Fetching data from filter API
+ *
+ * @param {!Object} spec Specification object
+ * @returns
+ */
+function fetchFilterData(spec) {
+
+  const queryString = createFilterQuery(spec);
+  return runSequentially(queryString)(encodeQueryURI, sendFilterRequest);
+}
+
+export default fetchFilterData;
