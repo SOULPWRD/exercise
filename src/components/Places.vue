@@ -39,12 +39,14 @@ export default {
     }
   },
   methods: {
+    // updates places data property
     updatePlaces(response) {
 
       const { data } = response;
 
       this.places = parseDataPlaces(data);
     },
+    // fetches available places data
     fetchPlaces(value) {
       //reset places
       this.places = undefined;
@@ -62,7 +64,7 @@ export default {
       }
 
       // else
-      // create new axios token
+      // create a new axios token
       this.axiosSource = axios.CancelToken.source();
 
       // and start requesting the server
@@ -71,7 +73,7 @@ export default {
       })
       .then(this.updatePlaces)
       // when promise is canceled, axios throws an error
-      // handle the error silent way
+      // handle the error the silent way
       .catch(() => { });
     }
   },
@@ -85,7 +87,8 @@ export default {
     to(value) {
       this.fetchPlaces(value)
     },
-    selectedPlace(value, previousValue) {
+    // watches selected place data property
+    selectedPlace(value) {
 
       if (!value) {
         return;
@@ -93,6 +96,7 @@ export default {
 
       const place = this.places.find((item) => item.id === value);
 
+      // depends wheteer Places component is for 'to' of 'flyFrom' data property
       if (this.to) {
         this.$emit(PLACE_SELECTED, Object.freeze({
           to: place
@@ -105,6 +109,7 @@ export default {
         flyFrom: place
       }));
     },
+    // watches selectedPlaces prop from parent component
     selectedPlaces(value) {
 
       if (!value) {

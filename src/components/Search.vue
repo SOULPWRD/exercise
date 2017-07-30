@@ -69,7 +69,6 @@ import PlaceTab from './PlaceTab';
 const DATE_FORMAT = 'YYYY-MM-DD';
 const RESULTS_FETCHED = 'results-fetched';
 
-
 export default {
   name: 'SearchPanel',
   data () {
@@ -84,17 +83,20 @@ export default {
     }
   },
   methods: {
+    // listener
+    // updates selected places data property whenever
+    // new place from Place component is selected
     updatePlaces(spec, remove = false) {
 
       console.log(spec);
 
-      // resolves to a value from 'to' or 'from' data properties
+      // resolves to a value from 'to' or 'flyFrom' data properties
       const key = Object.keys(spec)[0];
 
-      // if remove arg is provideds
+      // if remove arg is provided
       if (remove) {
 
-        //then remove the appropriate key
+        // then remove the appropriate key
         // and update the selectedPlaces data property
         const updatedPlaces = Object.assign({}, this.selectedPlaces);
         delete updatedPlaces[key];
@@ -103,13 +105,15 @@ export default {
         return;
       }
 
-      // updates places data prop
+      // else updates places data prop
       // whenever child component emits an event
       this.selectedPlaces = Object.assign({}, this.selectedPlaces, spec);
 
       // update to or flyFrom data property
-      this[key] = ''
+      this[key] = '';
     },
+    // Listener
+    // fetches data when user click on submit button
     fetchSearchResults(e) {
 
       const queryParams = {
@@ -125,14 +129,17 @@ export default {
     }
   },
   computed: {
+    // computes min date value for returnFrom
     minReturnFrom() {
 
       return moment().format(DATE_FORMAT);
     },
+    // computes min date value for returnTo
     minReturnTo() {
 
       return moment().add(1, 'M').format(DATE_FORMAT);
     },
+    // Map selected places
     formatedSelectedPlaces() {
 
       return Object.keys(this.selectedPlaces)
