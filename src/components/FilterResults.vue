@@ -1,8 +1,7 @@
 <template>
   <div class="filterResults--wrapper" v-if="visible">
     <div class="filterResults--controls">
-      <button class="btn btn-hide" v-if="visible" v-on:click="setVisible(false)">hide</button>
-      <button class="btn btn-show" v-else v-on:click="setVisible(true)">show</button>
+      <button class="btn btn-hide" v-if="visible" v-on:click="close">close</button>
     </div>
     <div class="filterResults--preloader" v-show="visible && preloader === true">
       <span>Loading results...</span>
@@ -12,10 +11,10 @@
         <h3>AVAILABLE FLIGHTS</h3>
       </div>
       <div class="filterResults--main">
-        <div class="filterResulst--warning" v-show="results.length === 0">
+        <div class="filterResulst--warning" v-show="results && results.length === 0">
           <span class="warning"> NO RESULTS FOUND</span>
         </div>
-        <ul class="filterResults--list" v-show="results.length > 0">
+        <ul class="filterResults--list" v-show="results && results.length > 0">
           <li class="filterResults--item" v-bind:key="result.id" v-for="result in results">
             <div class="item--attribute">
               <span>
@@ -62,13 +61,13 @@ export default {
       this.results = response.data;
     },
     // listener
-    setVisible(value, e) {
+    close(e) {
 
       if (e) {
         e.preventDefault();
       }
 
-      this.visible = value;
+      this.visible = false;
     },
     // listener
     showPreloader() {
