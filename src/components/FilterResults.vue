@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { bus } from './helpers.js';
+import { bus } from '../utils.js';
 
 const RESULTS_FETCHED = 'results-fetched';
 
