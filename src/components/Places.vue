@@ -64,6 +64,7 @@ export default {
       // when no input value
       // set axiousSource to default
       if (!value) {
+        this.preloader = false;
         this.axiosSource = undefined;
         return;
       }
